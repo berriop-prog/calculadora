@@ -1,11 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TextField from './textField';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <TextField nombre='Paola' />  
+        <TextField nombre='David' />          
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
