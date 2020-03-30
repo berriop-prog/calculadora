@@ -3,13 +3,11 @@ import Button from './Button';
 
 //componente funcional
 const ButtonsRow = (props) => {
-  return (
+ return (
     <div className="row">
-      {
-        props.elements.map((element) => (
-            <Button key={element.id}>{element.sym}</Button>
-        ))
-      }
+      {props.elements.map((element) => (
+        <Button handlerClick={element.handlerClick} key={element.id}>{element.sym}</Button>
+      ))}
     </div>
   );
 };
