@@ -1,15 +1,28 @@
-import React from 'react';
-import Button from './Button';
+import React, { Component } from 'react';
+import ButtonsPerRow from './ButtonsPerRow';
 
 //componente funcional
-const ButtonsRow = (props) => {
- return (
-    <div className="row">
-      {props.elements.map((element) => (
-        <Button handlerClick={element.handlerClick} key={element.id}>{element.sym}</Button>
-      ))}
-    </div>
-  );
-};
+class ButtonsRow extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
+  render() {
+    let rowElements = [];
+    let row = [];
+    for (let i = 0; i < 4; i++) {
+      rowElements = this.props.elements.filter(
+        (element, index) => index >= 4 * i && index <= 4 * i + 3
+      );
+      row = [
+        ...row,
+        <div className="row" key={`row-${i}`}>
+          <ButtonsPerRow elements={rowElements} />
+        </div>,
+      ];
+    }
+    return row;
+  }
+}
 
 export default ButtonsRow;

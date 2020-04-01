@@ -3,34 +3,11 @@ import './App.css';
 import Input from './components/Input';
 import ButtonsRow from './components/ButtonsRow';
 import ClearButton from './components/ClearButton';
+import { rows } from './rows';
+
+let calcRows = [];
 
 class App extends Component {
-  firstRow = [
-    { id: 0, sym: '7', handlerClick: undefined },
-    { id: 1, sym: '8', handlerClick: undefined },
-    { id: 2, sym: '9', handlerClick: undefined },
-    { id: 3, sym: '/', handlerClick: undefined },
-  ]; // handlerClick={this.divide}
-
-  secondRow = [
-    { id: 4, sym: '4', handlerClick: undefined },
-    { id: 5, sym: '5', handlerClick: undefined },
-    { id: 6, sym: '6', handlerClick: undefined },
-    { id: 7, sym: '*', handlerClick: undefined }, // handlerClick={this.multiply}
-  ];
-  thirdRow = [
-    { id: 8, sym: '1', handlerClick: undefined },
-    { id: 9, sym: '2', handlerClick: undefined },
-    { id: 10, sym: '3', handlerClick: undefined },
-    { id: 11, sym: '+', handlerClick: undefined }, // handlerClick={this.add}
-  ];
-  fourthRow = [
-    { id: 12, sym: '.', handlerClick: undefined }, // handlerClick={this.addDecimal}
-    { id: 13, sym: '0', handlerClick: undefined }, // handlerClick={this.addZeroToInput}
-    { id: 14, sym: '=', handlerClick: undefined }, // handlerClick={this.evaluate}
-    { id: 15, sym: '-', handlerClick: undefined }, // handlerClick={this.subtract}
-  ];
-
   constructor(props) {
     super(props);
 
@@ -40,23 +17,30 @@ class App extends Component {
       currentNumber: '',
       operator: '',
     };
-    this.firstRow[0].handlerClick = this.addToInput;
-    this.firstRow[1].handlerClick = this.addToInput;
-    this.firstRow[2].handlerClick = this.addToInput;
-    this.firstRow[3].handlerClick = this.divide;
-    this.secondRow[0].handlerClick = this.addToInput;
-    this.secondRow[1].handlerClick = this.addToInput;
-    this.secondRow[2].handlerClick = this.addToInput;
-    this.secondRow[3].handlerClick = this.multiply;
-    this.thirdRow[0].handlerClick = this.addToInput;
-    this.thirdRow[1].handlerClick = this.addToInput;
-    this.thirdRow[2].handlerClick = this.addToInput;
-    this.thirdRow[3].handlerClick = this.add;
-    this.fourthRow[0].handlerClick = this.addDecimal;
-    this.fourthRow[1].handlerClick = this.addZeroToInput;
-    this.fourthRow[2].handlerClick = this.evaluate;
-    this.fourthRow[3].handlerClick = this.subtract;
+    this.assignFunction();
   }
+
+  assignFunction = () => {
+    calcRows = rows.map((row) => {
+      if (row.sym === '+') {
+        return { ...row, handlerClick: this.add };
+      } else if (row.sym === '-') {
+        return { ...row, handlerClick: this.subtract };
+      } else if (row.sym === '*') {
+        return { ...row, handlerClick: this.multiply };
+      } else if (row.sym === '/') {
+        return { ...row, handlerClick: this.divide };
+      } else if (row.sym === '=') {
+        return { ...row, handlerClick: this.evaluate };
+      } else if (row.sym === '.') {
+        return { ...row, handlerClick: this.addDecimal };
+      } else if (row.sym === '0') {
+        return { ...row, handlerClick: this.addZeroToInput };
+      } else {
+        return { ...row, handlerClick: this.addToInput };
+      }
+    });
+  };
 
   addToInput = (val) => {
     this.setState({ input: this.state.input + val });
@@ -75,7 +59,7 @@ class App extends Component {
       this.setState({ input: this.state.input + val });
     }
   };
-  
+
   clearInput = () => {
     this.setState({ input: '' });
   };
@@ -151,10 +135,7 @@ class App extends Component {
             <Input>{this.state.input}</Input>
           </div>
 
-          <ButtonsRow elements={this.firstRow} />
-          <ButtonsRow elements={this.secondRow} />
-          <ButtonsRow elements={this.thirdRow} />
-          <ButtonsRow elements={this.fourthRow} />
+          <ButtonsRow elements={calcRows} />
 
           <div className="row">
             <ClearButton handlerClick={this.clearInput}>Clear</ClearButton>
