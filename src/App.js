@@ -40,6 +40,7 @@ class App extends Component {
         return { ...row, handlerClick: this.addToInput };
       }
     });
+   
   };
 
   addToInput = (val) => {
@@ -134,11 +135,10 @@ class App extends Component {
           <div className="row">
             <Input>{this.state.input}</Input>
           </div>
-
           <ButtonsRow elements={calcRows} />
 
           <div className="row">
-            <ClearButton handlerClick={this.clearInput}>Clear</ClearButton>
+            <ClearButton handlerClear={this.clearInput}>Clear</ClearButton>
           </div>
         </div>
       </div>
